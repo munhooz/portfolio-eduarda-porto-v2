@@ -120,7 +120,7 @@ export const defaultSiteData: SiteData = {
     {
       titulo: "Galeria de Fotos",
       descricao: "Cobertura de eventos e cerimoniais",
-      link: "https://eduardaporto.com.br/galeria.html",
+      link: "/galeria",
       imageUrl: "/images/event11.jpg",
       categoria: "Fotografia",
       ordem: 2,
@@ -176,7 +176,7 @@ export const defaultSiteData: SiteData = {
     {
       titulo: "Vitrine",
       descricao: "Edições do vitrine semanal escrita para o público interno do Partage shopping Betim",
-      link: "https://eduardaporto.com.br/vitrine.html",
+      link: "/vitrine",
       imageUrl: "/images/port7.jpg",
       categoria: "Editorial",
       ordem: 9,
