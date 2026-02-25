@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
+import { Link } from "react-router-dom";
 import { SiteData } from "@/data/siteData";
 
 interface ProjectsProps {
@@ -46,14 +47,23 @@ const Projects = ({ data }: ProjectsProps) => {
                 />
                 <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/20 transition-colors duration-300" />
                 {project.link && (
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="absolute top-3 right-3 w-9 h-9 rounded-full bg-background/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-background"
-                  >
-                    <ExternalLink className="w-4 h-4 text-primary" />
-                  </a>
+                  project.link.startsWith("/") ? (
+                    <Link
+                      to={project.link}
+                      className="absolute top-3 right-3 w-9 h-9 rounded-full bg-background/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-background"
+                    >
+                      <ExternalLink className="w-4 h-4 text-primary" />
+                    </Link>
+                  ) : (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="absolute top-3 right-3 w-9 h-9 rounded-full bg-background/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-background"
+                    >
+                      <ExternalLink className="w-4 h-4 text-primary" />
+                    </a>
+                  )
                 )}
                 <span className="absolute bottom-3 left-3 text-xs font-medium tracking-wider uppercase bg-primary text-primary-foreground px-3 py-1 rounded-full">
                   {project.categoria}
