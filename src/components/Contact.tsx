@@ -33,33 +33,37 @@ const Contact = ({ data }: ContactProps) => {
         </motion.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {items.map((item, i) => (
-            <motion.div
-              key={item.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="glass-card p-6 text-center"
-            >
-              <div className="w-12 h-12 rounded-full gradient-primary flex items-center justify-center mx-auto mb-4">
-                <item.icon className="w-5 h-5 text-primary-foreground" />
-              </div>
-              <p className="text-xs font-medium tracking-wider uppercase text-muted-foreground mb-2">{item.label}</p>
-              {item.href ? (
-                <a
-                  href={item.href}
-                  target={item.href.startsWith("http") ? "_blank" : undefined}
-                  rel="noopener noreferrer"
-                  className="text-sm font-medium text-foreground hover:text-primary transition-colors break-all"
+          {items.map((item, i) => {
+            const CardWrapper = item.href ? "a" : "div";
+            const linkProps = item.href
+              ? {
+                  href: item.href,
+                  target: item.href.startsWith("http") ? "_blank" : undefined,
+                  rel: item.href.startsWith("http") ? "noopener noreferrer" : undefined,
+                }
+              : {};
+
+            return (
+              <motion.div
+                key={item.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+              >
+                <CardWrapper
+                  {...linkProps}
+                  className={`glass-card p-6 text-center block ${item.href ? "hover:border-primary/40 hover:shadow-md hover:scale-[1.02] active:scale-[0.98] cursor-pointer" : ""} transition-all duration-200`}
                 >
-                  {item.value}
-                </a>
-              ) : (
-                <p className="text-sm font-medium text-foreground">{item.value}</p>
-              )}
-            </motion.div>
-          ))}
+                  <div className="w-12 h-12 rounded-full gradient-primary flex items-center justify-center mx-auto mb-4">
+                    <item.icon className="w-5 h-5 text-primary-foreground" />
+                  </div>
+                  <p className="text-xs font-medium tracking-wider uppercase text-muted-foreground mb-2">{item.label}</p>
+                  <p className="text-sm font-medium text-foreground break-all">{item.value}</p>
+                </CardWrapper>
+              </motion.div>
+            );
+          })}
         </div>
 
         <motion.div
