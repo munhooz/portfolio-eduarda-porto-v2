@@ -50,7 +50,7 @@ const Projects = ({ data }: ProjectsProps) => {
                   project.link.startsWith("/") ? (
                     <Link
                       to={project.link}
-                      className="absolute top-3 right-3 w-9 h-9 rounded-full bg-background/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-background"
+                      className="absolute top-3 right-3 w-9 h-9 rounded-full bg-background/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-background hover:scale-110"
                     >
                       <ExternalLink className="w-4 h-4 text-primary" />
                     </Link>
@@ -59,7 +59,7 @@ const Projects = ({ data }: ProjectsProps) => {
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="absolute top-3 right-3 w-9 h-9 rounded-full bg-background/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-background"
+                      className="absolute top-3 right-3 w-9 h-9 rounded-full bg-background/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-background hover:scale-110"
                     >
                       <ExternalLink className="w-4 h-4 text-primary" />
                     </a>

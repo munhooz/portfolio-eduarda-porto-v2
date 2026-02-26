@@ -1,6 +1,8 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import ImageLightbox from "@/components/ImageLightbox";
 
 const vitrineImages = [
   { src: "https://eduardaporto.com.br/img_gallery/44.jpg", alt: "Vitrine edição 44" },
@@ -9,13 +11,19 @@ const vitrineImages = [
 ];
 
 const Vitrine = () => {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="section-padding pb-8 pt-12">
         <div className="max-w-7xl mx-auto">
           <Link
-            to="/"
+            to="/#projects"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -60,7 +68,8 @@ const Vitrine = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
-                className="group glass-card rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300"
+                className="group glass-card rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer"
+                onClick={() => setLightboxIndex(i)}
               >
                 <div className="relative aspect-[3/4] overflow-hidden">
                   <img
@@ -79,6 +88,14 @@ const Vitrine = () => {
           </div>
         </div>
       </section>
+
+      {lightboxIndex !== null && (
+        <ImageLightbox
+          images={vitrineImages}
+          initialIndex={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+        />
+      )}
     </div>
   );
 };

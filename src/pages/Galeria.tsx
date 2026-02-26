@@ -1,6 +1,8 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import ImageLightbox from "@/components/ImageLightbox";
 
 const eventImages = Array.from({ length: 14 }, (_, i) => ({
   src: `https://eduardaporto.com.br/img_gallery/event${i + 1}.jpg`,
@@ -12,14 +14,22 @@ const cerimonialImages = Array.from({ length: 3 }, (_, i) => ({
   alt: `Cerimonial ${i + 1}`,
 }));
 
+const allImages = [...eventImages, ...cerimonialImages];
+
 const Galeria = () => {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="section-padding pb-8 pt-12">
         <div className="max-w-7xl mx-auto">
           <Link
-            to="/"
+            to="/#projects"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -64,7 +74,8 @@ const Galeria = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, margin: "-30px" }}
                 transition={{ duration: 0.3, delay: i * 0.04 }}
-                className="group relative aspect-[4/3] rounded-xl overflow-hidden glass-card"
+                className="group relative aspect-[4/3] rounded-xl overflow-hidden glass-card cursor-pointer"
+                onClick={() => setLightboxIndex(i)}
               >
                 <img
                   src={img.src}
@@ -99,7 +110,8 @@ const Galeria = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
-                className="group relative aspect-[4/3] rounded-xl overflow-hidden glass-card"
+                className="group relative aspect-[4/3] rounded-xl overflow-hidden glass-card cursor-pointer"
+                onClick={() => setLightboxIndex(eventImages.length + i)}
               >
                 <img
                   src={img.src}
@@ -113,6 +125,14 @@ const Galeria = () => {
           </div>
         </div>
       </section>
+
+      {lightboxIndex !== null && (
+        <ImageLightbox
+          images={allImages}
+          initialIndex={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+        />
+      )}
     </div>
   );
 };

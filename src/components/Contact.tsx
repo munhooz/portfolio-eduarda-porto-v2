@@ -72,7 +72,7 @@ const Contact = ({ data }: ContactProps) => {
           <a
             href={data.cvUrl}
             download
-            className="inline-flex items-center gap-3 px-10 py-4 rounded-full gradient-primary text-primary-foreground font-medium text-lg hover:opacity-90 transition-opacity shadow-lg"
+            className="inline-flex items-center gap-3 px-10 py-4 rounded-full gradient-primary text-primary-foreground font-medium text-lg hover:shadow-lg hover:shadow-primary/30 hover:scale-105 active:scale-95 transition-all duration-200 shadow-lg"
           >
             <Download className="w-5 h-5" />
             Baixar Currículo

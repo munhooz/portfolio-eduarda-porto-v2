@@ -57,7 +57,7 @@ const Hero = ({ data }: HeroProps) => {
             >
               <a
                 href="#about"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-medium hover:shadow-lg hover:shadow-primary/30 hover:scale-105 active:scale-95 transition-all duration-200"
               >
                 Sobre mim
                 <ArrowDown className="w-4 h-4" />
@@ -65,7 +65,7 @@ const Hero = ({ data }: HeroProps) => {
               <a
                 href={data.cvUrl}
                 download
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border border-primary text-primary font-medium hover:bg-primary hover:text-primary-foreground transition-colors"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border border-primary text-primary font-medium hover:bg-primary hover:text-primary-foreground hover:shadow-lg hover:shadow-primary/20 hover:scale-105 active:scale-95 transition-all duration-200"
               >
                 Currículo
                 <Download className="w-4 h-4" />
