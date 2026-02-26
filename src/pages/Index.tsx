@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { defaultSiteData, SiteData } from "@/data/siteData";
 import { fetchSiteData } from "@/lib/firebase";
 import Navbar from "@/components/Navbar";
@@ -12,10 +13,20 @@ import Footer from "@/components/Footer";
 
 const Index = () => {
   const [data, setData] = useState<SiteData>(defaultSiteData);
+  const location = useLocation();
 
   useEffect(() => {
     fetchSiteData().then(setData);
   }, []);
+
+  useEffect(() => {
+    if (location.hash) {
+      const el = document.querySelector(location.hash);
+      if (el) {
+        setTimeout(() => el.scrollIntoView({ behavior: "smooth" }), 100);
+      }
+    }
+  }, [location]);
 
   return (
     <>

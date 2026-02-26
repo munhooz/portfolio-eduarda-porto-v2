@@ -39,8 +39,8 @@ const Experience = ({ data }: ExperienceProps) => {
                 className="relative pl-16"
               >
                 {/* Timeline dot */}
-                <div className="absolute left-3.5 top-1 w-5 h-5 rounded-full gradient-primary flex items-center justify-center">
-                  <Briefcase className="w-2.5 h-2.5 text-primary-foreground" />
+                <div className="absolute left-3 top-1 w-7 h-7 rounded-full gradient-primary flex items-center justify-center">
+                  <Briefcase className="w-3.5 h-3.5 text-primary-foreground" />
                 </div>
 
                 <span className="text-xs font-medium tracking-wider uppercase text-primary bg-accent px-3 py-1 rounded-full">
