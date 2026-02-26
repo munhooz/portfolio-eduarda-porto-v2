@@ -186,7 +186,7 @@ export const defaultSiteData: SiteData = {
     email: "portoeduarda276@gmail.com",
     telefone: "+55 (31) 99473-2504",
     cidade: "Betim, Minas Gerais",
-    linkedin: "https://www.linkedin.com/in/eduarda-porto/",
+    linkedin: "https://www.linkedin.com/in/eduarda-porto-835517319/",
     outrosLinks: {},
   },
   cvUrl: "/pdf/eduarda_porto.pdf",
