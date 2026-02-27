@@ -1,14 +1,15 @@
-import { useState, useRef } from "react";
-import { Upload, FileText, X } from "lucide-react";
-import { uploadPDF } from "@/lib/firebase";
+import { useRef, useState } from "react";
+import { FileText, Upload, X } from "lucide-react";
 import { SiteData } from "@/data/siteData";
+import { uploadFileToCloudinary } from "@/services/cloudinary";
 
 interface PDFSectionProps {
   data: SiteData;
   onChange: (data: SiteData) => void;
 }
 
-const inputClass = "w-full px-3 py-2 rounded-lg bg-background border border-input text-foreground text-sm focus:ring-2 focus:ring-primary outline-none";
+const inputClass =
+  "w-full px-3 py-2 rounded-lg bg-background border border-input text-foreground text-sm focus:ring-2 focus:ring-primary outline-none";
 const labelClass = "block text-xs font-medium text-muted-foreground mb-1 uppercase tracking-wider";
 
 const PDFSection = ({ data, onChange }: PDFSectionProps) => {
@@ -16,14 +17,24 @@ const PDFSection = ({ data, onChange }: PDFSectionProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleFile = async (file: File) => {
+    if (file.type !== "application/pdf") {
+      alert("Formato inválido. Envie apenas PDF.");
+      return;
+    }
+
     setUploading(true);
     try {
-      const url = await uploadPDF(file);
+      const { url } = await uploadFileToCloudinary(file, "eduarda-porto/pdfs");
       onChange({ ...data, cvUrl: url });
-    } catch (err) {
-      alert("Erro ao enviar PDF. Verifique as configurações do Firebase Storage.");
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Falha ao enviar PDF.";
+      alert(`Erro ao enviar PDF: ${message}`);
+    } finally {
+      setUploading(false);
+      if (inputRef.current) {
+        inputRef.current.value = "";
+      }
     }
-    setUploading(false);
   };
 
   return (
@@ -60,7 +71,7 @@ const PDFSection = ({ data, onChange }: PDFSectionProps) => {
         <input
           ref={inputRef}
           type="file"
-          accept=".pdf"
+          accept=".pdf,application/pdf"
           className="hidden"
           onChange={(e) => {
             const file = e.target.files?.[0];
@@ -73,7 +84,7 @@ const PDFSection = ({ data, onChange }: PDFSectionProps) => {
           className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-primary text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors disabled:opacity-50"
         >
           <Upload className="w-4 h-4" />
-          {uploading ? "Enviando..." : "Upload de PDF"}
+          {uploading ? "Uploading..." : "Upload de PDF"}
         </button>
       </div>
     </div>

@@ -15,7 +15,7 @@ const labelClass = "block text-xs font-medium text-muted-foreground mb-1 upperca
 const SkillsSection = ({ data, onChange }: SkillsSectionProps) => {
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
-    useSensor(KeyboardSensor)
+    useSensor(KeyboardSensor),
   );
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -74,12 +74,14 @@ const SkillsSection = ({ data, onChange }: SkillsSectionProps) => {
         </SortableContext>
       </DndContext>
 
-      <button
-        onClick={addSkill}
-        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-primary text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors"
-      >
-        <Plus className="w-4 h-4" /> Adicionar Habilidade
-      </button>
+      <div className="flex justify-center py-4">
+        <button
+          onClick={addSkill}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-primary text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors"
+        >
+          <Plus className="w-4 h-4" /> Adicionar Habilidade
+        </button>
+      </div>
     </div>
   );
 };

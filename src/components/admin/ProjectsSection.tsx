@@ -19,7 +19,7 @@ const ProjectsSection = ({ data, onChange }: ProjectsSectionProps) => {
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
-    useSensor(KeyboardSensor)
+    useSensor(KeyboardSensor),
   );
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -81,17 +81,24 @@ const ProjectsSection = ({ data, onChange }: ProjectsSectionProps) => {
                   </div>
                   <div className="flex items-center gap-2 ml-3">
                     <button
-                      onClick={(e) => { e.stopPropagation(); removeProject(i); }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        removeProject(i);
+                      }}
                       className="p-1 text-destructive hover:opacity-70"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
-                    {expandedIndex === i ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
+                    {expandedIndex === i ? (
+                      <ChevronUp className="w-4 h-4 text-muted-foreground" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4 text-muted-foreground" />
+                    )}
                   </div>
                 </div>
 
                 {expandedIndex === i && (
-                  <div className="p-4 pt-0 space-y-3 border-t border-border">
+                  <div className="p-4 pt-3 space-y-3 border-t border-border">
                     <div className="grid md:grid-cols-2 gap-3">
                       <div>
                         <label className={labelClass}>Título</label>
@@ -106,11 +113,7 @@ const ProjectsSection = ({ data, onChange }: ProjectsSectionProps) => {
                         <input className={inputClass} value={proj.link} onChange={(e) => updateProject(i, "link", e.target.value)} />
                       </div>
                     </div>
-                    <ImageUpload
-                      label="Imagem do Projeto"
-                      value={proj.imageUrl}
-                      onChange={(url) => updateProject(i, "imageUrl", url)}
-                    />
+                    <ImageUpload label="Imagem do Projeto" value={proj.imageUrl} onChange={(url) => updateProject(i, "imageUrl", url)} />
                     <div>
                       <label className={labelClass}>Descrição</label>
                       <textarea className={inputClass} rows={3} value={proj.descricao} onChange={(e) => updateProject(i, "descricao", e.target.value)} />
@@ -123,12 +126,14 @@ const ProjectsSection = ({ data, onChange }: ProjectsSectionProps) => {
         </SortableContext>
       </DndContext>
 
-      <button
-        onClick={addProject}
-        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-primary text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors"
-      >
-        <Plus className="w-4 h-4" /> Adicionar Projeto
-      </button>
+      <div className="flex justify-center py-4">
+        <button
+          onClick={addProject}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-primary text-primary text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors"
+        >
+          <Plus className="w-4 h-4" /> Adicionar Projeto
+        </button>
+      </div>
     </div>
   );
 };

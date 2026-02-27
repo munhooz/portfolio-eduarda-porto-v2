@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SiteData } from "@/data/siteData";
+import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 
 interface ProjectsProps {
   data: SiteData;
@@ -39,11 +40,11 @@ const Projects = ({ data }: ProjectsProps) => {
               className="group glass-card overflow-hidden hover:shadow-lg transition-all duration-300"
             >
               <div className="relative h-48 overflow-hidden">
-                <img
+                <ImageWithSkeleton
                   src={project.imageUrl}
                   alt={project.titulo}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
+                  wrapperClassName="w-full h-full"
+                  className="group-hover:scale-105 transition-transform duration-500 object-cover"
                 />
                 <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/20 transition-colors duration-300" />
                 {project.link && (

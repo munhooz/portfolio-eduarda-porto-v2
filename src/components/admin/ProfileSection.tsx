@@ -25,13 +25,14 @@ const ProfileSection = ({ data, onChange }: ProfileSectionProps) => {
         <input className={inputClass} value={data.profile.titulo} onChange={(e) => update("titulo", e.target.value)} />
       </div>
       <div>
-        <label className={labelClass}>Descrição do Hero</label>
+        <label className={labelClass}>Descrição do topo do site</label>
         <textarea className={inputClass} rows={3} value={data.profile.descricao} onChange={(e) => update("descricao", e.target.value)} />
       </div>
       <ImageUpload
         label="Foto de Perfil"
         value={data.profile.fotoUrl}
         onChange={(url) => update("fotoUrl", url)}
+        previewSizeClassName="w-32 h-32 md:w-40 md:h-40"
       />
     </div>
   );

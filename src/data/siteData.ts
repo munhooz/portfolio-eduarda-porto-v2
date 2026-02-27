@@ -28,6 +28,15 @@ export interface SiteData {
     categoria: string;
     ordem: number;
   }>;
+  projectSubsections: {
+    galeria: {
+      eventos: string[];
+      cerimonial: string[];
+    };
+    vitrine: {
+      imagens: string[];
+    };
+  };
   contact: {
     email: string;
     telefone: string;
@@ -43,7 +52,7 @@ export const defaultSiteData: SiteData = {
     nome: "Eduarda Porto",
     titulo: "Jornalista | Social Media",
     descricao: "Especialista em Social Media, sou apaixonada por criar conteúdos engajadores e analisar tendências nas redes sociais.",
-    fotoUrl: "/images/profile.jpg",
+    fotoUrl: "",
   },
   about: {
     texto: "Sou jornalista de formação e apaixonada por contar histórias que conectam pessoas e marcas de forma autêntica. Com uma mente criativa e comunicativa, tenho uma trajetória que mistura estratégia, conteúdo e um olhar atento para as tendências digitais. Transformo ideias em projetos que fazem sentido e trazem resultados, sempre com leveza, alegria e muita dedicação.\n\nSeja planejando campanhas ou criando conteúdo, meu foco é humanizar as marcas e aproximá-las do público. Meu objetivo é construir uma comunicação que inspire e impacte positivamente.",
@@ -114,7 +123,7 @@ export const defaultSiteData: SiteData = {
       titulo: "Conecta Reels",
       descricao: "Captação e edição de vídeos curtos para empresas e eventos",
       link: "https://www.instagram.com/conecta_reels/",
-      imageUrl: "/images/port8.jpg",
+      imageUrl: "",
       categoria: "Vídeo",
       ordem: 1,
     },
@@ -122,7 +131,7 @@ export const defaultSiteData: SiteData = {
       titulo: "Galeria de Fotos",
       descricao: "Cobertura de eventos e cerimoniais",
       link: "/galeria",
-      imageUrl: "/images/event11.jpg",
+      imageUrl: "",
       categoria: "Fotografia",
       ordem: 2,
     },
@@ -130,7 +139,7 @@ export const defaultSiteData: SiteData = {
       titulo: "Vídeo Institucional",
       descricao: "Auxílio na produção do vídeo institucional para o projeto Comida que Abraça",
       link: "https://www.youtube.com/watch?v=44QZilgeDnY",
-      imageUrl: "/images/port1.jpg",
+      imageUrl: "",
       categoria: "Vídeo",
       ordem: 3,
     },
@@ -138,7 +147,7 @@ export const defaultSiteData: SiteData = {
       titulo: "Biblioteca Jayme Dicker",
       descricao: "Matéria publicada no site do Crea-MG, para inauguração da biblioteca Jayme Dicker",
       link: "",
-      imageUrl: "/images/port2.jpg",
+      imageUrl: "",
       categoria: "Matéria",
       ordem: 4,
     },
@@ -146,7 +155,7 @@ export const defaultSiteData: SiteData = {
       titulo: "História da Engenharia",
       descricao: "Matéria publicada no site do Crea-MG, sobre o evento 'História da Engenharia contada pelos Ex-Alunos'",
       link: "",
-      imageUrl: "/images/port3.jpg",
+      imageUrl: "",
       categoria: "Matéria",
       ordem: 5,
     },
@@ -154,7 +163,7 @@ export const defaultSiteData: SiteData = {
       titulo: "Notícias do Confea",
       descricao: "Matéria publicada no site do Crea-MG, sobre o conselheiro de MG representando o plenário Mineiro no CCM",
       link: "",
-      imageUrl: "/images/port4.jpg",
+      imageUrl: "",
       categoria: "Matéria",
       ordem: 6,
     },
@@ -162,7 +171,7 @@ export const defaultSiteData: SiteData = {
       titulo: "Associação dos Engenheiros do DER",
       descricao: "Matéria publicada no site do Crea-MG, para a cerimônia de apresentação final dos trabalhos do curso de capacitação em concessões com foco em manutenção",
       link: "",
-      imageUrl: "/images/port5.jpg",
+      imageUrl: "",
       categoria: "Matéria",
       ordem: 7,
     },
@@ -170,7 +179,7 @@ export const defaultSiteData: SiteData = {
       titulo: "Futebol Feminino",
       descricao: "Matéria publicada no jornal Marco, sobre a relevância do reconhecimento feminino no futebol, sinônimo de raça e luta - Pág 9",
       link: "https://drive.google.com/file/d/1he4TiXmXD5JtPMtnej4NZGhlWDj2ulHi/view",
-      imageUrl: "/images/port6.jpg",
+      imageUrl: "",
       categoria: "Matéria",
       ordem: 8,
     },
@@ -178,11 +187,20 @@ export const defaultSiteData: SiteData = {
       titulo: "Vitrine",
       descricao: "Edições do vitrine semanal escrita para o público interno do Partage shopping Betim",
       link: "/vitrine",
-      imageUrl: "/images/port7.jpg",
+      imageUrl: "",
       categoria: "Editorial",
       ordem: 9,
     },
   ],
+  projectSubsections: {
+    galeria: {
+      eventos: [],
+      cerimonial: [],
+    },
+    vitrine: {
+      imagens: [],
+    },
+  },
   contact: {
     email: "portoeduarda276@gmail.com",
     telefone: "+55 (31) 99473-2504",

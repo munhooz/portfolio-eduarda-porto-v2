@@ -1,6 +1,7 @@
-import { motion } from "framer-motion";
-import { ArrowDown, Download } from "lucide-react";
+﻿import { motion } from "framer-motion";
+import { ArrowDown } from "lucide-react";
 import { SiteData } from "@/data/siteData";
+import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 
 interface HeroProps {
   data: SiteData;
@@ -10,8 +11,8 @@ const Hero = ({ data }: HeroProps) => {
   return (
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background accent */}
-      <div className="absolute inset-0 gradient-primary opacity-[0.03]" />
-      <div className="absolute top-0 right-0 w-1/2 h-full gradient-primary opacity-5 rounded-bl-[200px]" />
+      <div className="absolute inset-0 gradient-primary opacity-[0.03] pointer-events-none" />
+      <div className="absolute top-0 right-0 w-1/2 h-full gradient-primary opacity-5 rounded-bl-[200px] pointer-events-none" />
 
       <div className="section-padding w-full max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -28,7 +29,7 @@ const Hero = ({ data }: HeroProps) => {
               transition={{ delay: 0.3, duration: 0.5 }}
               className="text-sm font-medium tracking-[0.2em] uppercase text-muted-foreground mb-4"
             >
-              Olá, eu sou a
+              {"Ol\u00e1, eu sou a"}
             </motion.p>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-4">
               <span className="gradient-text">{data.profile.nome}</span>
@@ -62,14 +63,6 @@ const Hero = ({ data }: HeroProps) => {
                 Sobre mim
                 <ArrowDown className="w-4 h-4" />
               </a>
-              <a
-                href={data.cvUrl}
-                download
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border border-primary text-primary font-medium hover:bg-primary hover:text-primary-foreground hover:shadow-lg hover:shadow-primary/20 hover:scale-105 active:scale-95 transition-all duration-200"
-              >
-                Currículo
-                <Download className="w-4 h-4" />
-              </a>
             </motion.div>
           </motion.div>
 
@@ -83,13 +76,12 @@ const Hero = ({ data }: HeroProps) => {
             <div className="relative">
               <div className="absolute -inset-4 gradient-primary rounded-[2rem] opacity-10 blur-2xl" />
               <div className="relative w-72 h-80 md:w-80 md:h-96 lg:w-96 lg:h-[28rem] rounded-[2rem] overflow-hidden shadow-2xl">
-                <img
+                <ImageWithSkeleton
                   src={data.profile.fotoUrl}
                   alt={data.profile.nome}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = "/images/port8.jpg";
-                  }}
+                  wrapperClassName="w-full h-full"
+                  className="object-cover"
+                  fallback={<div className="w-full h-full bg-muted" />}
                 />
               </div>
               {/* Decorative dots */}
