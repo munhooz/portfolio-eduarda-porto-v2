@@ -11,6 +11,7 @@ export interface SiteData {
   skills: Array<{
     nome: string;
     nivelPercentual: number;
+    ordem: number;
   }>;
   experience: Array<{
     cargo: string;
@@ -48,14 +49,14 @@ export const defaultSiteData: SiteData = {
     texto: "Sou jornalista de formação e apaixonada por contar histórias que conectam pessoas e marcas de forma autêntica. Com uma mente criativa e comunicativa, tenho uma trajetória que mistura estratégia, conteúdo e um olhar atento para as tendências digitais. Transformo ideias em projetos que fazem sentido e trazem resultados, sempre com leveza, alegria e muita dedicação.\n\nSeja planejando campanhas ou criando conteúdo, meu foco é humanizar as marcas e aproximá-las do público. Meu objetivo é construir uma comunicação que inspire e impacte positivamente.",
   },
   skills: [
-    { nome: "Escrita", nivelPercentual: 91 },
-    { nome: "Oratória", nivelPercentual: 84 },
-    { nome: "Apuração", nivelPercentual: 86 },
-    { nome: "Fotografia", nivelPercentual: 78 },
-    { nome: "Criatividade", nivelPercentual: 82 },
-    { nome: "Edição de Imagem", nivelPercentual: 76 },
-    { nome: "Edição de Vídeo", nivelPercentual: 80 },
-    { nome: "Gestão de Pessoas", nivelPercentual: 100 },
+    { nome: "Escrita", nivelPercentual: 91, ordem: 1 },
+    { nome: "Oratória", nivelPercentual: 84, ordem: 2 },
+    { nome: "Apuração", nivelPercentual: 86, ordem: 3 },
+    { nome: "Fotografia", nivelPercentual: 78, ordem: 4 },
+    { nome: "Criatividade", nivelPercentual: 82, ordem: 5 },
+    { nome: "Edição de Imagem", nivelPercentual: 76, ordem: 6 },
+    { nome: "Edição de Vídeo", nivelPercentual: 80, ordem: 7 },
+    { nome: "Gestão de Pessoas", nivelPercentual: 100, ordem: 8 },
   ],
   experience: [
     {
