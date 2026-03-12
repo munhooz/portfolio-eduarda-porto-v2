@@ -1,9 +1,10 @@
-import { SiteData } from "@/data/siteData";
-import { Plus, Trash2, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
+import { Plus, Trash2, ChevronDown, ChevronUp } from "lucide-react";
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable";
+import { SiteData } from "@/data/siteData";
 import SortableItem from "./SortableItem";
+import ConfirmDeleteButton from "./ConfirmDeleteButton";
 
 interface ExperienceSectionProps {
   data: SiteData;
@@ -87,29 +88,43 @@ const ExperienceSection = ({ data, onChange }: ExperienceSectionProps) => {
           {sortedExperience.map((exp, i) => (
             <SortableItem key={`exp-${i}`} id={`exp-${i}`}>
               <div className="glass-card overflow-hidden">
-                <div
-                  className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/30 transition-colors"
-                  onClick={() => setExpandedIndex(expandedIndex === i ? null : i)}
-                >
-                  <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between p-4 hover:bg-muted/30 transition-colors">
+                  <button
+                    type="button"
+                    className="flex-1 min-w-0 text-left"
+                    onClick={() => setExpandedIndex(expandedIndex === i ? null : i)}
+                  >
                     <p className="text-sm font-medium text-foreground truncate">{exp.cargo || "Nova experiência"}</p>
                     <p className="text-xs text-muted-foreground">{exp.empresa} {exp.periodo && `- ${exp.periodo}`}</p>
-                  </div>
+                  </button>
                   <div className="flex items-center gap-2 ml-3">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        removeExp(i);
-                      }}
-                      className="p-1 text-destructive hover:opacity-70"
+                    <ConfirmDeleteButton
+                      title="Excluir experiência?"
+                      description="Esta experiência será removida do painel e do site."
+                      onConfirm={() => removeExp(i)}
                     >
-                      <Trash2 className="w-4 h-4" />
+                      <button
+                        type="button"
+                        onClick={(e) => e.stopPropagation()}
+                        onMouseDown={(e) => e.stopPropagation()}
+                        onPointerDown={(e) => e.stopPropagation()}
+                        className="p-1 text-destructive hover:opacity-70"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </ConfirmDeleteButton>
+                    <button
+                      type="button"
+                      onClick={() => setExpandedIndex(expandedIndex === i ? null : i)}
+                      className="p-1 text-muted-foreground hover:opacity-70"
+                      aria-label={expandedIndex === i ? "Recolher experiência" : "Expandir experiência"}
+                    >
+                      {expandedIndex === i ? (
+                        <ChevronUp className="w-4 h-4 text-muted-foreground" />
+                      ) : (
+                        <ChevronDown className="w-4 h-4 text-muted-foreground" />
+                      )}
                     </button>
-                    {expandedIndex === i ? (
-                      <ChevronUp className="w-4 h-4 text-muted-foreground" />
-                    ) : (
-                      <ChevronDown className="w-4 h-4 text-muted-foreground" />
-                    )}
                   </div>
                 </div>
 
@@ -125,7 +140,7 @@ const ExperienceSection = ({ data, onChange }: ExperienceSectionProps) => {
                         <input className={inputClass} value={exp.empresa} onChange={(e) => updateExp(i, "empresa", e.target.value)} />
                       </div>
                       <div>
-                        <label className={labelClass}>Periodo (ex: Nov/2024 - Atual)</label>
+                        <label className={labelClass}>Período (ex: Nov/2024 - Atual)</label>
                         <input className={inputClass} value={exp.periodo} onChange={(e) => updateExp(i, "periodo", e.target.value)} />
                       </div>
                     </div>
