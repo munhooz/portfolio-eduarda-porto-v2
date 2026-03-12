@@ -27,14 +27,28 @@ export interface SiteData {
     imageUrl: string;
     categoria: string;
     ordem: number;
+    oculto: boolean;
   }>;
   projectSubsections: {
     galeria: {
-      eventos: string[];
-      cerimonial: string[];
+      pageTitle: string;
+      pageSubtitle: string;
+      categories: Array<{
+        id: string;
+        titulo: string;
+        imagens: string[];
+        ordem: number;
+      }>;
     };
     vitrine: {
-      imagens: string[];
+      pageTitle: string;
+      pageSubtitle: string;
+      categories: Array<{
+        id: string;
+        titulo: string;
+        imagens: string[];
+        ordem: number;
+      }>;
     };
   };
   contact: {
@@ -126,6 +140,7 @@ export const defaultSiteData: SiteData = {
       imageUrl: "",
       categoria: "Vídeo",
       ordem: 1,
+      oculto: false,
     },
     {
       titulo: "Galeria de Fotos",
@@ -134,6 +149,7 @@ export const defaultSiteData: SiteData = {
       imageUrl: "",
       categoria: "Fotografia",
       ordem: 2,
+      oculto: false,
     },
     {
       titulo: "Vídeo Institucional",
@@ -142,6 +158,7 @@ export const defaultSiteData: SiteData = {
       imageUrl: "",
       categoria: "Vídeo",
       ordem: 3,
+      oculto: false,
     },
     {
       titulo: "Biblioteca Jayme Dicker",
@@ -150,6 +167,7 @@ export const defaultSiteData: SiteData = {
       imageUrl: "",
       categoria: "Matéria",
       ordem: 4,
+      oculto: false,
     },
     {
       titulo: "História da Engenharia",
@@ -158,6 +176,7 @@ export const defaultSiteData: SiteData = {
       imageUrl: "",
       categoria: "Matéria",
       ordem: 5,
+      oculto: false,
     },
     {
       titulo: "Notícias do Confea",
@@ -166,6 +185,7 @@ export const defaultSiteData: SiteData = {
       imageUrl: "",
       categoria: "Matéria",
       ordem: 6,
+      oculto: false,
     },
     {
       titulo: "Associação dos Engenheiros do DER",
@@ -174,6 +194,7 @@ export const defaultSiteData: SiteData = {
       imageUrl: "",
       categoria: "Matéria",
       ordem: 7,
+      oculto: false,
     },
     {
       titulo: "Futebol Feminino",
@@ -182,23 +203,48 @@ export const defaultSiteData: SiteData = {
       imageUrl: "",
       categoria: "Matéria",
       ordem: 8,
+      oculto: false,
     },
     {
       titulo: "Vitrine",
-      descricao: "Edições do vitrine semanal escrita para o público interno do Partage shopping Betim",
+      descricao: "Edições do vitrine semanal escrita para o público interno do Partage Shopping Betim",
       link: "/vitrine",
       imageUrl: "",
       categoria: "Editorial",
       ordem: 9,
+      oculto: false,
     },
   ],
   projectSubsections: {
     galeria: {
-      eventos: [],
-      cerimonial: [],
+      pageTitle: "Galeria de Fotos",
+      pageSubtitle: "Cobertura fotografica de eventos e cerimoniais.",
+      categories: [
+        {
+          id: "eventos",
+          titulo: "Eventos",
+          imagens: [],
+          ordem: 1,
+        },
+        {
+          id: "cerimonial",
+          titulo: "Cerimonial",
+          imagens: [],
+          ordem: 2,
+        },
+      ],
     },
     vitrine: {
-      imagens: [],
+      pageTitle: "Vitrine",
+      pageSubtitle: "Edicoes do informativo semanal escrito para o publico interno do Partage Shopping Betim.",
+      categories: [
+        {
+          id: "partage-shopping-betim",
+          titulo: "Partage Shopping Betim",
+          imagens: [],
+          ordem: 1,
+        },
+      ],
     },
   },
   contact: {

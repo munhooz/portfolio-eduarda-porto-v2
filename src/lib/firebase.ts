@@ -3,6 +3,14 @@ import { getAuth } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { SiteData, defaultSiteData } from "@/data/siteData";
 
+type DeepPartial<T> = {
+  [K in keyof T]?: T[K] extends Array<infer U>
+    ? U[]
+    : T[K] extends Record<string, unknown>
+      ? DeepPartial<T[K]>
+      : T[K];
+};
+
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "",
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "",
@@ -53,20 +61,93 @@ export async function fetchSiteData(): Promise<SiteData> {
 
       skills: Array.isArray(raw.skills) ? raw.skills : defaultSiteData.skills,
       experience: Array.isArray(raw.experience) ? raw.experience : defaultSiteData.experience,
-      projects: Array.isArray(raw.projects) ? raw.projects : defaultSiteData.projects,
+      projects: Array.isArray(raw.projects)
+        ? raw.projects.map((project) => ({
+            titulo: typeof project?.titulo === "string" ? project.titulo : "",
+            descricao: typeof project?.descricao === "string" ? project.descricao : "",
+            link: typeof project?.link === "string" ? project.link : "",
+            imageUrl: typeof project?.imageUrl === "string" ? project.imageUrl : "",
+            categoria: typeof project?.categoria === "string" ? project.categoria : "",
+            ordem: typeof project?.ordem === "number" ? project.ordem : 0,
+            oculto: typeof project?.oculto === "boolean" ? project.oculto : false,
+          }))
+        : defaultSiteData.projects,
       projectSubsections: {
         galeria: {
-          eventos: Array.isArray(raw.projectSubsections?.galeria?.eventos)
-            ? raw.projectSubsections.galeria.eventos.filter((url): url is string => typeof url === "string")
-            : defaultSiteData.projectSubsections.galeria.eventos,
-          cerimonial: Array.isArray(raw.projectSubsections?.galeria?.cerimonial)
-            ? raw.projectSubsections.galeria.cerimonial.filter((url): url is string => typeof url === "string")
-            : defaultSiteData.projectSubsections.galeria.cerimonial,
+          pageTitle:
+            typeof raw.projectSubsections?.galeria?.pageTitle === "string"
+              ? raw.projectSubsections.galeria.pageTitle
+              : defaultSiteData.projectSubsections.galeria.pageTitle,
+          pageSubtitle:
+            typeof raw.projectSubsections?.galeria?.pageSubtitle === "string"
+              ? raw.projectSubsections.galeria.pageSubtitle
+              : defaultSiteData.projectSubsections.galeria.pageSubtitle,
+          categories: Array.isArray(raw.projectSubsections?.galeria?.categories)
+            ? raw.projectSubsections.galeria.categories
+                .map((category, index) => ({
+                  id: typeof category?.id === "string" && category.id.trim() ? category.id : `cat-${index + 1}`,
+                  titulo: typeof category?.titulo === "string" ? category.titulo : `Categoria ${index + 1}`,
+                  imagens: Array.isArray(category?.imagens)
+                    ? category.imagens.filter((url): url is string => typeof url === "string")
+                    : [],
+                  ordem: typeof category?.ordem === "number" ? category.ordem : index + 1,
+                }))
+                .sort((a, b) => a.ordem - b.ordem)
+            : [
+                {
+                  id: "eventos",
+                  titulo: "Eventos",
+                  imagens: Array.isArray((raw.projectSubsections?.galeria as { eventos?: unknown[] } | undefined)?.eventos)
+                    ? ((raw.projectSubsections?.galeria as { eventos?: unknown[] }).eventos ?? []).filter(
+                        (url): url is string => typeof url === "string",
+                      )
+                    : defaultSiteData.projectSubsections.galeria.categories[0].imagens,
+                  ordem: 1,
+                },
+                {
+                  id: "cerimonial",
+                  titulo: "Cerimonial",
+                  imagens: Array.isArray((raw.projectSubsections?.galeria as { cerimonial?: unknown[] } | undefined)?.cerimonial)
+                    ? ((raw.projectSubsections?.galeria as { cerimonial?: unknown[] }).cerimonial ?? []).filter(
+                        (url): url is string => typeof url === "string",
+                      )
+                    : defaultSiteData.projectSubsections.galeria.categories[1].imagens,
+                  ordem: 2,
+                },
+              ],
         },
         vitrine: {
-          imagens: Array.isArray(raw.projectSubsections?.vitrine?.imagens)
-            ? raw.projectSubsections.vitrine.imagens.filter((url): url is string => typeof url === "string")
-            : defaultSiteData.projectSubsections.vitrine.imagens,
+          pageTitle:
+            typeof raw.projectSubsections?.vitrine?.pageTitle === "string"
+              ? raw.projectSubsections.vitrine.pageTitle
+              : defaultSiteData.projectSubsections.vitrine.pageTitle,
+          pageSubtitle:
+            typeof raw.projectSubsections?.vitrine?.pageSubtitle === "string"
+              ? raw.projectSubsections.vitrine.pageSubtitle
+              : defaultSiteData.projectSubsections.vitrine.pageSubtitle,
+          categories: Array.isArray(raw.projectSubsections?.vitrine?.categories)
+            ? raw.projectSubsections.vitrine.categories
+                .map((category, index) => ({
+                  id: typeof category?.id === "string" && category.id.trim() ? category.id : `vitrine-cat-${index + 1}`,
+                  titulo: typeof category?.titulo === "string" ? category.titulo : `Categoria ${index + 1}`,
+                  imagens: Array.isArray(category?.imagens)
+                    ? category.imagens.filter((url): url is string => typeof url === "string")
+                    : [],
+                  ordem: typeof category?.ordem === "number" ? category.ordem : index + 1,
+                }))
+                .sort((a, b) => a.ordem - b.ordem)
+            : [
+                {
+                  id: "partage-shopping-betim",
+                  titulo: "Partage Shopping Betim",
+                  imagens: Array.isArray((raw.projectSubsections?.vitrine as { imagens?: unknown[] } | undefined)?.imagens)
+                    ? ((raw.projectSubsections?.vitrine as { imagens?: unknown[] }).imagens ?? []).filter(
+                        (url): url is string => typeof url === "string",
+                      )
+                    : defaultSiteData.projectSubsections.vitrine.categories[0].imagens,
+                  ordem: 1,
+                },
+              ],
         },
       },
 
@@ -90,4 +171,10 @@ export async function saveSiteData(data: SiteData): Promise<void> {
   if (!db) throw new Error("Firebase not configured");
   const docRef = doc(db, "site", "public");
   await setDoc(docRef, data);
+}
+
+export async function saveSiteSection(data: DeepPartial<SiteData>): Promise<void> {
+  if (!db) throw new Error("Firebase not configured");
+  const docRef = doc(db, "site", "public");
+  await setDoc(docRef, data, { merge: true });
 }

@@ -3,6 +3,7 @@ import { Plus, Trash2 } from "lucide-react";
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable";
 import SortableItem from "./SortableItem";
+import ConfirmDeleteButton from "./ConfirmDeleteButton";
 
 interface SkillsSectionProps {
   data: SiteData;
@@ -65,9 +66,15 @@ const SkillsSection = ({ data, onChange }: SkillsSectionProps) => {
                     <input className={inputClass} type="number" min={0} max={100} value={skill.nivelPercentual} onChange={(e) => updateSkill(i, "nivelPercentual", Number(e.target.value))} />
                   </div>
                 </div>
-                <button onClick={() => removeSkill(i)} className="text-destructive hover:opacity-70 p-1">
-                  <Trash2 className="w-4 h-4" />
-                </button>
+                <ConfirmDeleteButton
+                  title="Excluir habilidade?"
+                  description="Esta habilidade será removida do painel e do site."
+                  onConfirm={() => removeSkill(i)}
+                >
+                  <button type="button" className="p-1 text-destructive hover:opacity-70">
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </ConfirmDeleteButton>
               </div>
             </SortableItem>
           ))}

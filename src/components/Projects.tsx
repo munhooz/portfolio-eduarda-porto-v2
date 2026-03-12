@@ -9,7 +9,7 @@ interface ProjectsProps {
 }
 
 const Projects = ({ data }: ProjectsProps) => {
-  const sorted = [...data.projects].sort((a, b) => a.ordem - b.ordem);
+  const sorted = [...data.projects].filter((project) => !project.oculto).sort((a, b) => a.ordem - b.ordem);
 
   return (
     <section id="projects" className="section-padding">

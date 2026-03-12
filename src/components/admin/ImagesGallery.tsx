@@ -25,22 +25,20 @@ const ImagesGallery = ({ data }: ImagesGalleryProps) => {
       }
     });
 
-    data.projectSubsections.galeria.eventos.forEach((url) => {
-      if (isNonEmptyString(url)) {
-        entries.add(url.trim());
-      }
+    data.projectSubsections.galeria.categories.forEach((category) => {
+      category.imagens.forEach((url) => {
+        if (isNonEmptyString(url)) {
+          entries.add(url.trim());
+        }
+      });
     });
 
-    data.projectSubsections.galeria.cerimonial.forEach((url) => {
-      if (isNonEmptyString(url)) {
-        entries.add(url.trim());
-      }
-    });
-
-    data.projectSubsections.vitrine.imagens.forEach((url) => {
-      if (isNonEmptyString(url)) {
-        entries.add(url.trim());
-      }
+    data.projectSubsections.vitrine.categories.forEach((category) => {
+      category.imagens.forEach((url) => {
+        if (isNonEmptyString(url)) {
+          entries.add(url.trim());
+        }
+      });
     });
 
     return Array.from(entries);

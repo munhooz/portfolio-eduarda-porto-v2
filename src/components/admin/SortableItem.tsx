@@ -8,11 +8,13 @@ interface SortableItemProps {
 }
 
 const SortableItem = ({ id, children }: SortableItemProps) => {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useSortable({
+    id,
+    transition: null,
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),
-    transition,
     opacity: isDragging ? 0.5 : 1,
   };
 
